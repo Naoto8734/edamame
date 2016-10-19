@@ -4,6 +4,6 @@ module.exports = (robot) ->
         #console.log(msg)
         msg.send ":edamame: @#{msg.message.user.name}"
 
-#田部さんに反応する。
-    robot.hear /akkili|たなべ|田部/i, (msg) ->
+#akkiliさんに反応する。
+    robot.hear /akkili/i, (msg) ->
          msg.send ":akkili:さんが#{msg.message.user.room}で呼ばれました。"
