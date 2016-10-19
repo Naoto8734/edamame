@@ -1,6 +1,6 @@
 #"枝豆"の発言に反応する。
 module.exports = (robot) ->
-    robot.hear /枝豆|えだまめ|edamame/i, (msg) ->
+    robot.hear /枝豆|えだまめ/i, (msg) ->
         #console.log(msg)
         msg.send ":edamame: @#{msg.message.user.name}"
 
