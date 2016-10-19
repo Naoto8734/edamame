@@ -1,2 +1,2 @@
 #edamame_bot
-#枝豆botのスクリプト用
+#slackでの枝豆botのスクリプト用
