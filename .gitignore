@@ -1,2 +1,6 @@
 #gitのcommitから除外するファイル群
+
+#example.coffeeは変更し無い。
 example.coffee
+#写真は見せ無い。
+clubroom.jpg

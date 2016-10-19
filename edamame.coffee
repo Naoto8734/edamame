@@ -5,5 +5,5 @@ module.exports = (robot) ->
         msg.send ":edamame: @#{msg.message.user.name}"
 
 #akkiliさんに反応する。
-    robot.hear /akkili/i, (msg) ->
+    robot.respond /akkili/i, (msg) ->
          msg.send ":akkili:さんが#{msg.message.user.room}で呼ばれました。"
