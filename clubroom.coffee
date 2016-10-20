@@ -18,7 +18,7 @@ module.exports = (robot) ->
             postSlack channel, fileName, (err, res) ->
                 if err
                     return msg.send "Post error : Failed " + err
-                msg.send "Post OK"
+                msg.send "今の部室の状況ですよ！"
 
 
 #関数
@@ -26,10 +26,10 @@ module.exports = (robot) ->
         getChannelFromName channel, (err, id) ->
             if err
                 return callback err
-            exec "curl -F file=@#{DIR}#{fileName} -F channels=#{id} -F token=#{process.env.SLACK_API_TOKEN} https://slack.com/api/files.upload", (err, stdout, stderr) ->
-#                exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
-#                    if err
-#                        console.log "failed to delete file"
+            exec "curl -F file=@#{DIR}#{fileName} -F channels=#{channel} -F token=$SLACK_API_TOKEN https://slack.com/api/files.upload", (err, stdout, stderr) ->
+                exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
+                    if err
+                        console.log "failed to delete file"
                 if err
                     return callback err
                 callback null, 'OK'
