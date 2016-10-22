@@ -16,10 +16,15 @@
 token = process.env.SLACK_API_TOKEN
 myurl = "https://slack.com/api/channels.info"
 module.exports = (robot) ->
-    robot.hear /blog|ブログ/i, (msg) ->
+    robot.hear /選んで/i, (msg) ->
         myurl += "?token=#{token}&channel=#{msg.message.room}"
-        msg.send "叩くよ。"
+        #APIを叩く。
         request = robot.http(myurl)
             .get()
         request (err, res, body) ->
-            msg.send "叩いたよ"
+            if err
+                msg.send "Error:cry: : #{err}"
+            data = JSON.parse body
+            random_member = msg.random data.channel.members
+            msg.send "今回は<@#{random_member}>さんです！"
+            msg.send "#{data.channel.name}から１人選びました。"
