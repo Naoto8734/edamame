@@ -14,15 +14,12 @@
 #   Naoto8734
 
 token = process.env.SLACK_API_TOKEN
-url = "https://slack.com/api/channels.info"
-
+myurl = "https://slack.com/api/channels.info"
 module.exports = (robot) ->
-    robot.hear /blog|ブログ/i, (res) ->
-        url += "?token=#{token}&channel=#{res.message.room}&pretty=1"
-        robot.http(url)
-            .header('Accept', 'application/json')
-            .get() (err, res, body) ->
-                if err
-                    res.send "Error:cry::#{err}"
-                data = JSON.parse body
-                res.send "#{data.ok}"
+    robot.hear /blog|ブログ/i, (msg) ->
+        myurl += "?token=#{token}&channel=#{msg.message.room}"
+        msg.send "叩くよ。"
+        request = robot.http(myurl)
+            .get()
+        request (err, res, body) ->
+            msg.send "叩いたよ"
