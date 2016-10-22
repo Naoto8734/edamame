@@ -1,5 +1,20 @@
-#部室の入退室管理用
-#http://qiita.com/KeitaMoromizato/items/1ecbfcd0f9343ce53975
+# Description:
+#   部室の写真を投稿します。
+#   http://qiita.com/KeitaMoromizato/items/1ecbfcd0f9343ce53975
+#   参考です。
+#
+# Dependencies:
+#
+# Configuration:
+#
+# Commands:
+#   部室_今 or 今_部室 - 部室の今の写真を撮影、投稿します。_の部分には適当な１文字を入れてください。
+#
+# Notes:
+#
+# Author:
+#   Naoto8734
+
 module.exports = (robot) ->
     exec = require('child_process').exec
     Slack = require 'slack-node'
