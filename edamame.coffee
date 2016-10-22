@@ -22,4 +22,5 @@ module.exports = (robot) ->
         res.reply ":edamame:ですよ #{res.message.user.name}さん！  "
 
     robot.respond /akkili/i, (res) ->
-         res.send ":akkili:さんが呼ばれました。"
+        res.send ":akkili:さんが呼ばれました。"
+

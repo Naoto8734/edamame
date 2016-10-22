@@ -8,7 +8,7 @@
 # Configuration:
 #
 # Commands:
-#   tanapi_temp or タナパイ_温度 - タナパイのCPU温度が表示されます。_には適当な1文字を入れてください。
+#   tanapi temp or タナパイ 温度 - タナパイのCPU温度が表示されます。間には適当な1文字を入れてください。
 #
 # Notes:
 #   <optional notes required for the script>

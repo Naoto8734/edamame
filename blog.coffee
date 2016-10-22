@@ -14,5 +14,5 @@
 #   Naoto8734
 
 module.exports = (robot) ->
-    robot.respond /ブログ/i , (res) ->
-        res.reply "ブログを書こう！"
+    robot.hear /blog|ブログ/i, (res) ->
+        res.send "ok"
