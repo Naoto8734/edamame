@@ -6,7 +6,7 @@ module.exports = (robot) ->
     slack = new Slack process.env.SLACK_API_TOKEN
     DIR = '/home/pi/Pictures/'
 
-    robot.hear /部室.今/i, (msg) ->
+    robot.hear /(部室.今)|(今.部室)/i, (msg) ->
         channel = msg.message.room
         fileName = "clubroom.jpg"
 
@@ -18,7 +18,7 @@ module.exports = (robot) ->
             postSlack channel, fileName, (err, res) ->
                 if err
                     return msg.send "Post error : Failed " + err
-                msg.send "今の部室の状況ですよ！"
+                msg.reply ":OK:今の状況ですよ！"
 
 
 #関数
