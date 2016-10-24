@@ -33,7 +33,11 @@ module.exports = (robot) ->
             postSlack channel, fileName, (err, res) ->
                 if err
                     return msg.send "Post error : Failed " + err
-                msg.reply "#clubroomに投稿されました！"
+                #clubroomに投稿されたか判別。
+                if msg.message.room == channel
+                    msg.reply ":ok:です！"
+                else
+                    msg.reply "#clubroomに投稿されました！今度からはそちらにお願いします！:oko:"
 
 
 #関数
