@@ -26,7 +26,7 @@ module.exports = (robot) ->
         fileName = "clubroom.jpg"
 
         console.log "rcv"
-        exec "raspistill -o #{DIR}#{fileName} -t 1", (err, stdout, stderr) ->
+        exec "/home/pi/bot/scripts/camera.sh", (err, stdout, stderr) ->
             if err
                 return msg.send "Take photo error : Failed " + err
 
