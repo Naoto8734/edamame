@@ -23,9 +23,10 @@ module.exports = (robot) ->
 
     robot.hear /(部室.今)|(今.部室)/i, (msg) ->
         channel = "C2T9PNAR0"
-        fileName = "clubroom.jpg"
+        fileName = "result.png"
 
         console.log "rcv"
+        msg.reply "写真の撮影&加工中です。しばらくお待ち下さい......:hushed:"
         exec "/home/pi/bot/scripts/camera.sh", (err, stdout, stderr) ->
             if err
                 return msg.send "Take photo error : Failed " + err
@@ -37,7 +38,7 @@ module.exports = (robot) ->
                 if msg.message.room == channel
                     msg.reply ":ok:です！"
                 else
-                    msg.reply "#clubroomに投稿されました！今度からはそちらにお願いします！:oko:"
+                    msg.reply "#clubroomに投稿されました！今度からはそちらにお願いします！:angry:"
 
 
 #関数
@@ -46,9 +47,9 @@ module.exports = (robot) ->
             if err
                 return callback err
             exec "curl -F file=@#{DIR}#{fileName} -F channels=#{channel} -F token=$SLACK_API_TOKEN https://slack.com/api/files.upload", (err, stdout, stderr) ->
-                exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
-                    if err
-                        console.log "failed to delete file"
+                #exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
+                #    if err
+                #        console.log "failed to delete file"
                 if err
                     return callback err
                 callback null, 'OK'
