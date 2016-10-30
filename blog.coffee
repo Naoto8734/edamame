@@ -13,7 +13,7 @@
 # Author:
 #   Naoto8734
 
-mytoken = process.env.SLACK_API_TOKEN
+mytoken = process.env.HUBOT_SLACK_TOKEN
 myurl = "https://slack.com/api/channels.info"
 module.exports = (robot) ->
     robot.respond /選んで/i, (msg) ->
