@@ -17,52 +17,34 @@
 
 module.exports = (robot) ->
     exec = require('child_process').exec
-    Slack = require 'slack-node'
-    slack = new Slack process.env.SLACK_API_TOKEN
+    mytoken = process.env.HUBOT_SLACK_TOKEN
     DIR = '/home/pi/Pictures/'
+    comment = "画像を投稿しました。:ok:"
 
     robot.hear /(部室.今)|(今.部室)/i, (msg) ->
         channel = "C2T9PNAR0"
-        fileName = "result.png"
 
-        console.log "rcv"
-        msg.reply "写真の撮影&加工中です。しばらくお待ち下さい......:hushed:"
-        exec "/home/pi/bot/scripts/camera.sh", (err, stdout, stderr) ->
-            if err
-                return msg.send "Take photo error : Failed " + err
-
-            postSlack channel, fileName, (err, res) ->
+        #channelが正しいかを判定
+        if msg.message.room != channel
+            #channelでない時
+            msg.reply "#clubroomでお願いします!!  :angry:"
+        else
+            #写真を撮影
+            exec "raspistill -o #{DIR}clubroom.jpg", (err, stdout, stderr) ->
                 if err
-                    return msg.send "Post error : Failed " + err
-                #clubroomに投稿されたか判別。
-                if msg.message.room == channel
-                    msg.reply ":ok:です！"
-                else
-                    msg.reply "#clubroomに投稿されました！今度からはそちらにお願いします！:angry:"
+                    return msg.reply "写真の撮影に失敗しました。 :" + err
+                msg.reply "写真を撮りました。:camera:"
 
+                #画像の加工
+                exec "#{DIR}face_over_write.py", (err, stdout, stderr) ->
+                    if err
+                        return msg.reply "写真の加工に失敗しました。 :" + err
+                    msg.reply "写真を加工しました。 :warai_otoko:"
 
-#関数
-    postSlack = (channel, fileName, callback) ->
-        getChannelFromName channel, (err, id) ->
-            if err
-                return callback err
-            exec "curl -F file=@#{DIR}#{fileName} -F channels=#{channel} -F token=$HUBOT_SLACK_TOKEN https://slack.com/api/files.upload", (err, stdout, stderr) ->
-                #exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
-                #    if err
-                #        console.log "failed to delete file"
-                #    return callback err
-                callback null, 'OK'
-
-               
-    getChannelFromName = (channelName, callback) ->
-        slack.api "channels.list", exclude_archived: 1, (err, response) ->
-            if err
-                return callback err
-
-            if !response.ok
-                return callback response.error
-            for val, i in response.channels
-                if val.name == channelName
-                    return callback null, val.id
-
-            return callback err 
+                    #画像の投稿
+                    exec "curl -F file=@#{DIR}result.png -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
+                              if err
+                                  return msg.repply "画像の投稿に失敗しました。 :" + err
+                              data = JSON.parse stdout
+                              if !data.ok
+                                  return msg.reply "画像の投稿に失敗しました。 :" + data.error
