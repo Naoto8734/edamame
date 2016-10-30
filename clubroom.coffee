@@ -47,10 +47,10 @@ module.exports = (robot) ->
             if err
                 return callback err
             exec "curl -F file=@#{DIR}#{fileName} -F channels=#{channel} -F token=$HUBOT_SLACK_TOKEN https://slack.com/api/files.upload", (err, stdout, stderr) ->
-                exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
-                    if err
-                        console.log "failed to delete file"
-                    return callback err
+                #exec "rm -f #{DIR}#{fileName}", (err, stdout, stderr) ->
+                #    if err
+                #        console.log "failed to delete file"
+                #    return callback err
                 callback null, 'OK'
 
                
