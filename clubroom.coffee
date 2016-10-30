@@ -36,7 +36,7 @@ module.exports = (robot) ->
                 msg.reply "写真を撮りました。:camera:"
 
                 #画像の加工
-                exec "python #{DIR}face_over_write.py", (err, stdout, stderr) ->
+                exec "#{DIR}face_over_write.py", (err, stdout, stderr) ->
                     if err
                         return msg.reply "写真の加工に失敗しました。 :" + err
                     msg.reply "写真を加工しました。 :warai_otoko:"
