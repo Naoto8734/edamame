@@ -19,6 +19,7 @@ module.exports = (robot) ->
     exec = require('child_process').exec
     mytoken = process.env.HUBOT_SLACK_TOKEN
     DIR = '/home/pi/Pictures/'
+    comment = "画像を投稿しました。:ok:"
 
     robot.hear /(部室.今)|(今.部室)/i, (msg) ->
         channel = "C2T9PNAR0"
@@ -41,15 +42,9 @@ module.exports = (robot) ->
                     msg.reply "写真を加工しました。 :warai_otoko:"
 
                     #画像の投稿
-                    request = robot.http("https://slack.com/api/files.upload")
-                        .query(token: mytoken)
-                        .query(file: DIR+"result.png")
-                        .query(filename:"clubroom")
-                        .query(channels: channel)
-                        .get()
-                    request (err, res, body) ->
-                        if err
-                            return msg.reply "写真の投稿に失敗しました。 :" + err
-                        data = JSON.parse body
-                        if !data.ok
-                            return msg.reply "写真の投稿に失敗しました。 :" + data.error
+                    exec "curl -F file=@#{DIR}result.png -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
+                              if err
+                                  return msg.repply "画像の投稿に失敗しました。 :" + err
+                              data = JSON.parse stdout
+                              if !data.ok
+                                  return msg.reply "画像の投稿に失敗しました。 :" + data.error
