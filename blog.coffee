@@ -6,18 +6,18 @@
 # Configuration:
 #
 # Commands:
-#   hubot ブログ - 今いるチャンネルから、ランダムで1人選びます。
+#   hubot 選んで - 今いるチャンネルから、ランダムで1人選びます。
 #
 # Notes:
 #
 # Author:
 #   Naoto8734
 
-token = process.env.SLACK_API_TOKEN
+mytoken = process.env.SLACK_API_TOKEN
 myurl = "https://slack.com/api/channels.info"
 module.exports = (robot) ->
-    robot.hear /選んで/i, (msg) ->
-        myurl += "?token=#{token}&channel=#{msg.message.room}"
+    robot.respond /選んで/i, (msg) ->
+        myurl += "?token=#{mytoken}&channel=#{msg.message.room}"
         #APIを叩く。
         request = robot.http(myurl)
             .get()
@@ -26,5 +26,15 @@ module.exports = (robot) ->
                 msg.send "Error:cry: : #{err}"
             data = JSON.parse body
             random_member = msg.random data.channel.members
-            msg.send "今回は<@#{random_member}>さんです！"
-            msg.send "#{data.channel.name}から１人選びました。"
+            msg.send "#{data.channel.name}から１人選びます。"
+
+#random_memberはidなので、再びAPIを叩いて名前を取得する。
+            request = robot.http("https://slack.com/api/users.info")
+                .query(token: mytoken)
+                .query(user: random_member)
+                .get()
+            request (err, res, body) ->
+                if err
+                    msg.send "Error:cry: : #{err}"
+                data = JSON.parse body
+                msg.send "#{data.user.name}さんが選ばれました。"
