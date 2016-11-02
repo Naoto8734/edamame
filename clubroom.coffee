@@ -43,8 +43,8 @@ module.exports = (robot) ->
 
                     #画像の投稿 タブを一つずらしました。
                 exec "curl -F file=@#{DIR}clubroom.jpg -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
-                          if err
-                              return msg.repply "画像の投稿に失敗しました。 :" + err
-                          data = JSON.parse stdout
-                              if !data.ok
-                                  return msg.reply "画像の投稿に失敗しました。 :" + data.error
+                    if err
+                        return msg.repply "画像の投稿に失敗しました。 :" + err
+                    data = JSON.parse stdout
+                    if !data.ok
+                        return msg.reply "画像の投稿に失敗しました。 :" + data.error
