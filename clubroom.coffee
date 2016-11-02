@@ -8,7 +8,7 @@
 # Configuration:
 #
 # Commands:
-#   部室 今 - 部室の今の写真を撮影、投稿します。間の部分には適当な１文字を入れてください。
+#   部室 今 - 部室の今の写真を撮影、投稿します。部室と今両方が文に入っている時反応します。
 #
 # Notes:
 #
@@ -21,7 +21,7 @@ module.exports = (robot) ->
     DIR = '/home/pi/Pictures/'
     comment = "画像を投稿しました。:ok:"
 
-    robot.hear /(部室.今)|(今.部室)/i, (msg) ->
+    robot.hear /^(?=.*(部室|ぶしつ))(?=.*(今|いま))/i, (msg) ->
         channel = "C2T9PNAR0"
 
         #channelが正しいかを判定
@@ -43,8 +43,8 @@ module.exports = (robot) ->
 
                     #画像の投稿 タブを一つずらしました。
                 exec "curl -F file=@#{DIR}clubroom.jpg -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
-                          if err
-                              return msg.repply "画像の投稿に失敗しました。 :" + err
-                          data = JSON.parse stdout
-                              if !data.ok
-                                  return msg.reply "画像の投稿に失敗しました。 :" + data.error
+                    if err
+                        return msg.repply "画像の投稿に失敗しました。 :" + err
+                    data = JSON.parse stdout
+                    if !data.ok
+                        return msg.reply "画像の投稿に失敗しました。 :" + data.error
