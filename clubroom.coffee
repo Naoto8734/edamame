@@ -21,7 +21,7 @@ module.exports = (robot) ->
     DIR = '/home/pi/Pictures/'
     comment = "画像を投稿しました。:ok:"
 
-    robot.hear /^(?=.*部室)(?=.*今)/i, (msg) ->
+    robot.hear /^(?=.*(部室|ぶしつ))(?=.*(今|いま))/i, (msg) ->
         channel = "C2T9PNAR0"
 
         #channelが正しいかを判定
