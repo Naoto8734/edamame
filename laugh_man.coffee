@@ -21,7 +21,7 @@ module.exports = (robot) ->
     DIR = '/home/pi/Pictures/'
     comment = "画像を投稿しました。:ok:"
 
-    robot.respond /(笑い男|わらいおとこ)/i, (msg) ->
+    robot.respond /(笑い男|笑男|わらいおとこ)/i, (msg) ->
         channel = "C2T9PNAR0"
 
         #channelが正しいかを判定
@@ -41,10 +41,10 @@ module.exports = (robot) ->
                         return msg.reply "写真の加工に失敗しました。 :" + err
                     msg.reply "写真を加工しました。 :warai_otoko:"
 
-                #画像の投稿
-                exec "curl -F file=@#{DIR}result.png -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
-                    if err
-                        return msg.repply "画像の投稿に失敗しました。 :" + err
-                    data = JSON.parse stdout
-                    if !data.ok
-                        return msg.reply "画像の投稿に失敗しました。 :" + data.error
+                    #画像の投稿
+                    exec "curl -F file=@#{DIR}result.png -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
+                        if err
+                            return msg.repply "画像の投稿に失敗しました。 :" + err
+                        data = JSON.parse stdout
+                        if !data.ok
+                            return msg.reply "画像の投稿に失敗しました。 :" + data.error
