@@ -34,14 +34,7 @@ module.exports = (robot) ->
                 if err
                     return msg.reply "写真の撮影に失敗しました。 :" + err
                 msg.reply "写真を撮りました。:camera:"
-
-                #画像の加工
-                #exec "#{DIR}face_over_write.py", (err, stdout, stderr) ->
-                #    if err
-                #        return msg.reply "写真の加工に失敗しました。 :" + err
-                #    msg.reply "写真を加工しました。 :warai_otoko:"
-
-                    #画像の投稿 タブを一つずらしました。
+                #画像の投稿
                 exec "curl -F file=@#{DIR}clubroom.jpg -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
                     if err
                         return msg.repply "画像の投稿に失敗しました。 :" + err
