@@ -42,7 +42,7 @@ module.exports = (robot) ->
                     msg.reply "写真を加工しました。 :warai_otoko:"
 
                 #画像の投稿
-                exec "curl -F file=@#{DIR}clubroom.jpg -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
+                exec "curl -F file=@#{DIR}result.png -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
                     if err
                         return msg.repply "画像の投稿に失敗しました。 :" + err
                     data = JSON.parse stdout
