@@ -1,5 +1,5 @@
 # Description:
-#   部室の写真を投稿します。
+#   部室の写真を投稿します。その後、顔を笑い男に合成します。
 #   http://qiita.com/KeitaMoromizato/items/1ecbfcd0f9343ce53975
 #   参考です。
 #
@@ -8,7 +8,7 @@
 # Configuration:
 #
 # Commands:
-#   部室 今 - 部室の今の写真を撮影、投稿します。部室と今両方が文に入っている時反応します。
+#   hubot 笑い男 - 部室の写真を撮り、人の顔を笑い男にして投稿します。調整中です。
 #
 # Notes:
 #
@@ -21,7 +21,7 @@ module.exports = (robot) ->
     DIR = '/home/pi/Pictures/'
     comment = "画像を投稿しました。:ok:"
 
-    robot.hear /^(?=.*(部室|ぶしつ))(?=.*(今|いま))/i, (msg) ->
+    robot.respond /(笑い男|わらいおとこ)/i, (msg) ->
         channel = "C2T9PNAR0"
 
         #channelが正しいかを判定
@@ -34,6 +34,13 @@ module.exports = (robot) ->
                 if err
                     return msg.reply "写真の撮影に失敗しました。 :" + err
                 msg.reply "写真を撮りました。:camera:"
+
+                #画像の加工
+                exec "#{DIR}face_over_write.py", (err, stdout, stderr) ->
+                    if err
+                        return msg.reply "写真の加工に失敗しました。 :" + err
+                    msg.reply "写真を加工しました。 :warai_otoko:"
+
                 #画像の投稿
                 exec "curl -F file=@#{DIR}clubroom.jpg -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
                     if err
