@@ -12,13 +12,31 @@
 # Author:
 #   Naoto8734
 
-channel = "C2GJNG457"
+mychannel = "C2GJNG457"
 #"C0EK3RA04"がread_only
 
 module.exports = (robot) ->
     robot.hear /.*/, (msg) ->
-        if msg.message.room = channel
+        if msg.message.room == mychannel
             #channelがread_onlyだった時
-            if !(/@channel/.test(msg.message.room))
-                #@channel
-                msg.send "@chnnelをつけませんでしたね。"
+            if !(/@channel/.test(msg.message.text))
+                msg.send "ok!"
+                #@channelをつけなかった時
+                mytoken = process.env.HUBOT_SLACK_TOKEN
+                mytext = "@channelをつけてくださいね。"
+                
+                request = robot.http("https://slack.com/api/chat.postMessage")
+                    .query(token: mytoken)
+                    .query(channel: mychannel)
+                    .query(text: mytext)
+                    .query(username: 赤城)
+                    #.query(icon_url: "https://drive.google.com/uc?export=view&id=0B_cHA5mW0mzeYTJhYm1pMWdCbm8")
+                    .get()
+                
+                request (err, res, body) ->
+                    msg.send "ok!"
+                    if err
+                        msg.send "Error:cry: : #{err}"
+                    data = JSON.parse body
+                    if !data.ok
+                        msg.send "Error:cry: : #{data.error}"
