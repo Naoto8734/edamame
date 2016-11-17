@@ -26,15 +26,15 @@ module.exports = (robot) ->
                 mytext = "@channelをつけてくださいね。"
                 
                 request = robot.http("https://slack.com/api/chat.postMessage")
-                    .query(token: mytoken)
-                    .query(channel: mychannel)
-                    .query(text: mytext)
-                    .query(username: 赤城)
-                    #.query(icon_url: "https://drive.google.com/uc?export=view&id=0B_cHA5mW0mzeYTJhYm1pMWdCbm8")
+                    .query(token:mytoken)
+                    .query(channel:mychannel)
+                    .query(text:mytext)
+                    .query(username:赤城)
+                    .query("iconurl:https://dl.dropboxusercontent.com/s/tzvut1fxlkcxsz4/akagi.jpg")
                     .get()
                 
                 request (err, res, body) ->
-                    msg.send "ok!"
+                    msg.send "ok"
                     if err
                         msg.send "Error:cry: : #{err}"
                     data = JSON.parse body
