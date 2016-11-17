@@ -23,8 +23,10 @@ Linuxコマンドを叩いて写真を撮影。
 それをAPIを叩いてSlackに投稿しています。  
 4. temp  
 CPUの温度を知るための機能です。  
-4. laugh_man  
+5. laugh_man  
 clubroomの笑い男版です。写真を撮った後、人の顔を笑い男に加工します。  
+6. limit_read_only  
+read_only(#general)の発言に@channelをつけないと、赤城さんに怒られる。  
 
 ###メモ
 git&githubの練習も兼ねているので、それについてメモします。
