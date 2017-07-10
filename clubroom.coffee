@@ -33,7 +33,7 @@ module.exports = (robot) ->
             exec "raspistill -o #{DIR}clubroom.jpg", (err, stdout, stderr) ->
                 if err
                     return msg.reply "写真の撮影に失敗しました。 :" + err
-                msg.reply "写真を撮りました。:camera:"
+                #msg.reply "写真を撮りました。:camera:" #確認用のメッセージです。
                 #画像の投稿
                 exec "curl -F file=@#{DIR}clubroom.jpg -F channels=#{channel} -F token=#{mytoken} -F filename=clubroom -F initial_comment=#{comment} https://slack.com/api/files.upload", (err, stdout, stderr) ->
                     if err
