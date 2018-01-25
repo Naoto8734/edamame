@@ -23,7 +23,48 @@ module.exports = (robot) ->
 
     robot.respond /akkili/i, (res) ->
         res.send ":akkili:さんが呼ばれました。"
-    
-    robot.respond /(ppap|ピコ太郎)/i, (res) ->
-        res.reply "Pen-Pineapple-Apple-Pen"
-        res.send "https://www.youtube.com/watch?v=0E00Zuayv9Q"
+
+    robot.hear /ppap/i, (res) ->
+        res.reply """
+        I have a pen :lower_left_ballpoint_pen:
+        I have an apple :apple:
+        ah!　Apple pen :apple::lower_left_ballpoint_pen:
+        I have a pen :lower_left_ballpoint_pen:
+        I have a Pineapple:pineapple:
+        ah!　Pineapple pen:pineapple::lower_left_ballpoint_pen:
+        Apple pen :apple::lower_left_ballpoint_pen: Pineapple pen :pineapple::lower_left_ballpoint_pen:
+        Pen Pineapple Apple pen :lower_left_ballpoint_pen::pineapple::apple::lower_left_ballpoint_pen:
+        Pen Pineapple Apple pen :lower_left_ballpoint_pen::pineapple::apple::lower_left_ballpoint_pen:
+        """
+
+    robot.hear /sushi|寿司|へいらっしゃい/i, (res) ->
+      res.reply """
+      \\ﾍｲﾗｯｼｬｲ/
+      SUSHI:sushi:食べたい:pray:この世:earth_asia:の終わり:wave:の日は
+      SUSHI:sushi:食べたい:pray:最後:boom::bomb:の晩餐:fork_and_knife:に:innocent:
+      SUSHI:sushi:食べたい:pray:特別:birthday::tada::trophy::couplekiss:なあの日:calendar:には
+      SUSHI:sushi:食べたい:pray:
+      トロ:fish:タコ:octopus:ウニ✳いくら:moneybag:
+      :loudspeaker:ﾃｰﾚｰﾚｰ⤴(感謝:pray:セ〜〜〜ル)(都会:bridge_at_night:のオアスシ:sushi:)
+      """
+
+    robot.hear /(?:no see|こっちみんな)\s+(.*)/i, (res) ->
+      noSee = res.match[1]
+      res.reply """
+      (　ﾟдﾟ) 「#{noSee}」
+      ＿(__つ/￣￣￣/＿
+
+      ＼/ /
+
+      ￣￣￣
+
+
+
+      ( ﾟдﾟ ) 彡 
+
+      ＿(__つ/￣￣￣/＿
+
+      ＼/ /
+
+      ￣￣￣
+      """
