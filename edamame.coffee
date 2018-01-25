@@ -11,6 +11,8 @@
 #   hubot akkili - akkiliさんのemojiが表示されます。
 #   枝豆 or えだまめ - edamameがemojiと名前を返してくれます。デバック用です。
 #   hubot ppap - ppapの動画をくれます。
+#   hubot sushi - :sushi:ﾍｲﾗｯｼｬｲ
+#   hubot noSee - (　ﾟдﾟ)こっちみんな
 # Notes:
 #
 # Author:
